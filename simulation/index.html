@@ -1,0 +1,118 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Auction Lab</title>
+<link rel="stylesheet" href="style.css?v=2">
+</head>
+<body>
+<header>
+  <div class="brand"><span class="logo">&#9670;</span> Auction Lab</div>
+  <nav id="tabs">
+    <button data-tab="t1" class="active">Second-price</button>
+    <button data-tab="t2">First-price</button>
+    <button data-tab="t3">VCG path</button>
+  </nav>
+</header>
+
+<!-- ================= TAB 1 ================= -->
+<main id="t1" class="tab active">
+  <section class="panel controls">
+    <h2>Second-price auction <small>Part 1 A / B / C</small></h2>
+    <div class="row"><label>Your value <b id="v-out">0.80</b></label>
+      <div class="chips" id="v-chips"><button data-v="0.2">0.2</button><button data-v="0.5">0.5</button><button data-v="0.8" class="on">0.8</button></div>
+      <input type="range" id="v-slider" min="0" max="1" step="0.01" value="0.8"></div>
+    <div class="row"><label>Rival strategy</label>
+      <div class="chips" id="strat-chips"><button data-s="truthful" class="on">truthful</button><button data-s="half">bid v/2</button><button data-s="random">random U[0,1]</button></div></div>
+    <div class="row"><label>Rivals</label>
+      <div class="chips" id="rivals-chips"><button data-r="1" class="on">1</button><button data-r="2">2</button><button data-r="3">3</button></div></div>
+    <div class="row"><label>Rival bids</label>
+      <div class="chips" id="mode-chips"><button data-m="random" class="on">random draws</button><button data-m="fixed">fixed (Part B)</button></div>
+      <div class="chips" id="fixed-chips" hidden><button data-f="0.1">0.1</button><button data-f="0.4" class="on">0.4</button><button data-f="0.9">0.9</button></div></div>
+    <div class="row"><label>Your bid <b id="b-out">0.80</b></label>
+      <input type="range" id="b-slider" min="0" max="1" step="0.01" value="0.8">
+      <button id="b-truth" class="ghost">bid truthfully (b = v)</button></div>
+    <div class="row buttons">
+      <button id="play" class="primary">&#9654; Play</button><button id="step">Step</button>
+      <button id="run10k">+10,000</button><button id="run100k">+100,000</button><button id="reset" class="ghost">Reset</button>
+      <label class="inline">speed <input type="range" id="speed" min="1" max="60" value="8"></label>
+    </div>
+    <div id="badge1" class="badge"></div>
+  </section>
+
+  <section class="panel arena">
+    <h3>Live auction</h3>
+    <div id="arena1"></div>
+    <div class="ticker">
+      <div><span>auctions</span><b id="s1-n">0</b></div>
+      <div><span>avg utility @ your bid</span><b id="s1-avg">&ndash;</b></div>
+      <div><span>exact</span><b id="s1-exact">&ndash;</b></div>
+      <div><span>total profit</span><b id="s1-profit">0.00</b></div>
+    </div>
+    <svg id="spark1" viewBox="0 0 640 90" class="chart small"></svg>
+  </section>
+
+  <section class="panel"><h3>Average utility vs your bid <small>dots = simulation, line = exact</small></h3>
+    <svg id="curve1" viewBox="0 0 640 320" class="chart"></svg></section>
+  <section class="panel"><h3>Convergence at your bid <small>estimate &plusmn; 1.96 SE</small></h3>
+    <svg id="conv1" viewBox="0 0 640 320" class="chart"></svg></section>
+
+  <section class="panel"><h3>Regret heatmap <small>how much utility you lose by bidding b when your value is v</small></h3>
+    <div class="heat"><canvas id="heat1" width="101" height="101"></canvas>
+      <div class="legend">x: your bid 0 &rarr; 1<br>y: your value 0 &rarr; 1<br><span class="dot"></span> current (v, b)<br>dark = no regret, bright = large regret.<br>Zero regret along the diagonal b = v.</div></div></section>
+  <section class="panel controls"><h3>All 9 combinations <small>exact curves, Part A grid</small></h3>
+    <button id="grid-toggle" class="ghost">Show / hide the 3 &times; 3 grid</button>
+    <div id="grid9" class="grid9" hidden></div></section>
+</main>
+
+<!-- ================= TAB 2 ================= -->
+<main id="t2" class="tab">
+  <section class="panel controls">
+    <h2>First-price auction <small>Part 2</small></h2>
+    <div class="row"><label>Bidders n</label>
+      <div class="chips" id="n-chips"><button data-n="2" class="on">2</button><button data-n="3">3</button><button data-n="4">4</button></div></div>
+    <div class="row"><label>You bid k &middot; v, k = <b id="k-out">0.5</b> <span id="kstar-out" class="muted"></span></label>
+      <input type="range" id="k-slider" min="0.1" max="2" step="0.1" value="0.5">
+      <button id="k-eq" class="ghost">nearest to equilibrium k*</button></div>
+    <div class="row buttons">
+      <button id="play2" class="primary">&#9654; Play</button><button id="step2">Step</button>
+      <button id="run10k2">+10,000</button><button id="run100k2">+100,000</button><button id="reset2" class="ghost">Reset</button>
+      <label class="inline">speed <input type="range" id="speed2" min="1" max="60" value="8"></label>
+    </div>
+    <p class="muted">Others bid the equilibrium bid (n&minus;1)/n &middot; value. The winner pays its own bid.</p>
+  </section>
+  <section class="panel arena"><h3>Live auction</h3><div id="arena2"></div>
+    <div class="ticker">
+      <div><span>auctions</span><b id="s2-n">0</b></div>
+      <div><span>avg utility @ k</span><b id="s2-avg">&ndash;</b></div>
+      <div><span>exact</span><b id="s2-exact">&ndash;</b></div>
+      <div><span>winner overpaid &gt; 0.01</span><b id="s2-frac">&ndash;</b></div>
+    </div></section>
+  <section class="panel"><h3>Expected utility vs k <small>lines = exact for n = 2,3,4</small></h3><svg id="curve2" viewBox="0 0 640 320" class="chart"></svg></section>
+  <section class="panel"><h3>Winner's overpayment vs k <small>winning bid &minus; second-highest bid</small></h3><svg id="over2" viewBox="0 0 640 320" class="chart"></svg></section>
+  <section class="panel"><h3>Overpayment histogram at current k</h3><svg id="hist2" viewBox="0 0 640 260" class="chart"></svg></section>
+</main>
+
+<!-- ================= TAB 3 ================= -->
+<main id="t3" class="tab">
+  <section class="panel controls">
+    <h2>VCG path auction <small>Part 3, book Figure 7.3</small></h2>
+    <p class="muted">Each edge is an agent with a private cost. Drag a cost, or click an edge, to see the chosen path and the VCG payments update.</p>
+    <div id="costs3" class="costs"></div>
+    <div class="row buttons"><button id="reset3" class="ghost">Reset to book costs</button><span id="badge3" class="badge"></span></div>
+  </section>
+  <section class="panel graph"><h3>Network</h3><svg id="graph3" viewBox="0 0 620 320"></svg>
+    <table id="table3"></table></section>
+  <section class="panel"><h3>Misreport experiment <small>selected edge: <b id="sel3">BE</b></small></h3>
+    <div class="row"><label>Reported cost <b id="rep-out">1</b></label><input type="range" id="rep-slider" min="0" max="10" step="0.5" value="1"></div>
+    <div id="rep-result" class="muted"></div>
+    <svg id="util3" viewBox="0 0 640 300" class="chart"></svg>
+    <div id="badge3b" class="badge"></div></section>
+</main>
+
+<footer>All simulations run in your browser. Seeded random numbers, so a given run is reproducible.</footer>
+<script src="core.js?v=2"></script>
+<script src="app.js?v=3"></script>
+</body>
+</html>

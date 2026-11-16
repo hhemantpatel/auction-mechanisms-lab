@@ -1,0 +1,44 @@
+
+===== Part 1A/B: 1 rival(s) =====
+Experiment A: strategy, v, argmax bid, max utility, utility at b=v, max|sim-exact|
+  truthful  v=0.2  argmax=0.20  max=0.0201  u(b=v)=0.0201  err=0.0008
+  truthful  v=0.5  argmax=0.50  max=0.1251  u(b=v)=0.1251  err=0.0008
+  truthful  v=0.8  argmax=0.80  max=0.3205  u(b=v)=0.3205  err=0.0009
+  half      v=0.2  argmax=0.20  max=0.0400  u(b=v)=0.0400  err=0.0003
+  half      v=0.5  argmax=0.50  max=0.2497  u(b=v)=0.2497  err=0.0005
+  half      v=0.8  argmax=0.50  max=0.5497  u(b=v)=0.5497  err=0.0009
+  random    v=0.2  argmax=0.20  max=0.0200  u(b=v)=0.0200  err=0.0007
+  random    v=0.5  argmax=0.50  max=0.1249  u(b=v)=0.1249  err=0.0006
+  random    v=0.8  argmax=0.80  max=0.3195  u(b=v)=0.3195  err=0.0007
+Experiment B (3 rival-bid combination(s) checked): rival bid, v, u(b=v), max_b u(b)
+  rival=0.1  v=0.2  u(b=v)=0.1000  max=0.1000  b=v optimal: True
+  rival=0.1  v=0.5  u(b=v)=0.4000  max=0.4000  b=v optimal: True
+  rival=0.1  v=0.8  u(b=v)=0.7000  max=0.7000  b=v optimal: True
+  rival=0.4  v=0.2  u(b=v)=0.0000  max=0.0000  b=v optimal: True
+  rival=0.4  v=0.5  u(b=v)=0.1000  max=0.1000  b=v optimal: True
+  rival=0.4  v=0.8  u(b=v)=0.4000  max=0.4000  b=v optimal: True
+  rival=0.9  v=0.2  u(b=v)=0.0000  max=0.0000  b=v optimal: True
+  rival=0.9  v=0.5  u(b=v)=0.0000  max=0.0000  b=v optimal: True
+  rival=0.9  v=0.8  u(b=v)=0.0000  max=0.0000  b=v optimal: True
+
+===== Part 1C: 2 rival(s) =====
+Experiment A: strategy, v, argmax bid, max utility, utility at b=v, max|sim-exact|
+  truthful  v=0.2  argmax=0.20  max=0.0027  u(b=v)=0.0027  err=0.0014
+  truthful  v=0.5  argmax=0.50  max=0.0418  u(b=v)=0.0418  err=0.0008
+  truthful  v=0.8  argmax=0.80  max=0.1707  u(b=v)=0.1707  err=0.0005
+  half      v=0.2  argmax=0.20  max=0.0106  u(b=v)=0.0106  err=0.0002
+  half      v=0.5  argmax=0.50  max=0.1665  u(b=v)=0.1665  err=0.0003
+  half      v=0.8  argmax=0.50  max=0.4665  u(b=v)=0.4665  err=0.0006
+  random    v=0.2  argmax=0.20  max=0.0026  u(b=v)=0.0026  err=0.0010
+  random    v=0.5  argmax=0.50  max=0.0415  u(b=v)=0.0415  err=0.0006
+  random    v=0.8  argmax=0.80  max=0.1707  u(b=v)=0.1707  err=0.0005
+Experiment B (6 rival-bid combination(s) checked): rival bid, v, u(b=v), max_b u(b)
+  rival=0.1  v=0.2  u(b=v)=0.1000  max=0.1000  b=v optimal: True
+  rival=0.1  v=0.5  u(b=v)=0.4000  max=0.4000  b=v optimal: True
+  rival=0.1  v=0.8  u(b=v)=0.7000  max=0.7000  b=v optimal: True
+  rival=0.4  v=0.2  u(b=v)=0.0000  max=0.0000  b=v optimal: True
+  rival=0.4  v=0.5  u(b=v)=0.1000  max=0.1000  b=v optimal: True
+  rival=0.4  v=0.8  u(b=v)=0.4000  max=0.4000  b=v optimal: True
+  rival=0.9  v=0.2  u(b=v)=0.0000  max=0.0000  b=v optimal: True
+  rival=0.9  v=0.5  u(b=v)=0.0000  max=0.0000  b=v optimal: True
+  rival=0.9  v=0.8  u(b=v)=0.0000  max=0.0000  b=v optimal: True
