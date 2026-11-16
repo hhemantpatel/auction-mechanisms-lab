@@ -5,7 +5,7 @@
   const $ = (s) => document.querySelector(s);
   const $$ = (s) => Array.from(document.querySelectorAll(s));
   const f2 = (x) => x.toFixed(2), f3 = (x) => x.toFixed(3), f4 = (x) => x.toFixed(4);
-  const COL = { you: "#2ee6c5", rival: "#ffb84d", win: "#ff4d8d", exact: "#cdd6f4", warn: "#ff6b6b", n3: "#7aa2ff", n4: "#c792ea" };
+  const COL = { you: "#1f77b4", rival: "#ff7f0e", win: "#d62728", exact: "#1a1a1a", warn: "#d62728", n3: "#2ca02c", faint: "#c4c4c4" };
   const MAX = 300000;
 
   // ---------------- tiny SVG chart helper ----------------
@@ -36,7 +36,7 @@
     s.push(`<line class="axis" x1="${L}" x2="${W - R}" y1="${H - B}" y2="${H - B}"/><line class="axis" x1="${L}" x2="${L}" y1="${T}" y2="${H - B}"/>`);
     if (o.xlabel) s.push(`<text x="${(L + W - R) / 2}" y="${H - 6}" text-anchor="middle">${o.xlabel}</text>`);
     if (o.ylabel) s.push(`<text transform="translate(12 ${(T + H - B) / 2}) rotate(-90)" text-anchor="middle">${o.ylabel}</text>`);
-    if (o.title) s.push(`<text x="${L + 6}" y="${T + 12}" style="fill:#c9d4f5">${o.title}</text>`);
+    if (o.title) s.push(`<text x="${L + 6}" y="${T + 12}" style="fill:var(--text)">${o.title}</text>`);
     const clipY = (y) => Math.max(o.ymin, Math.min(o.ymax, y));
     return {
       sx, sy,
@@ -62,8 +62,13 @@
           s.push(`<rect x="${x + 1}" y="${y}" width="${Math.max(1, w)}" height="${Math.max(0, sy(0) - y)}" fill="${color}" rx="2"/>`); });
         return this;
       },
-      legend(items) { items.forEach((it, i) => s.push(`<rect x="${W - 190}" y="${T + 2 + i * 15}" width="10" height="10" fill="${it[1]}" rx="2"/><text x="${W - 175}" y="${T + 11 + i * 15}">${it[0]}</text>`)); return this; },
-      text(x, y, t, color) { s.push(`<text x="${sx(x)}" y="${sy(y)}" style="fill:${color || "#cdd6f4"}">${t}</text>`); return this; },
+      legend(items) {
+        const x = W - R - 250;
+        s.push(`<rect x="${x - 8}" y="${T}" width="256" height="${items.length * 24 + 8}" fill="#fff" stroke="var(--line)"/>`);
+        items.forEach((it, i) => s.push(`<rect x="${x}" y="${T + 10 + i * 24}" width="12" height="12" fill="${it[1]}"/><text x="${x + 18}" y="${T + 21 + i * 24}">${it[0]}</text>`));
+        return this;
+      },
+      text(x, y, t, color) { s.push(`<text x="${sx(x)}" y="${sy(y)}" style="fill:${color || "var(--text)"}">${t}</text>`); return this; },
       done() { svg.innerHTML = s.join(""); },
     };
   }
@@ -134,10 +139,10 @@
     return true;
   }
   function runBatch1(k) { for (let i = 0; i < k && step1(); i++); draw1(); }
-  function stop1() { if (S1.timer) { clearInterval(S1.timer); S1.timer = null; $("#play").innerHTML = "&#9654; Play"; } }
+  function stop1() { if (S1.timer) { clearInterval(S1.timer); S1.timer = null; $("#play").innerHTML = "Play"; } }
   function play1() {
     if (S1.timer) return stop1();
-    $("#play").innerHTML = "&#10073;&#10073; Pause";
+    $("#play").innerHTML = "Pause";
     S1.timer = setInterval(() => { const k = perTick(+$("#speed").value); for (let i = 0; i < k; i++) if (!step1()) break; draw1(); }, 80);
   }
 
@@ -164,11 +169,11 @@
       d.max = mx; heatCache[key] = d;
     }
     const cv = $("#heat1"), ctx = cv.getContext("2d"), img = ctx.createImageData(101, 101);
-    const ramp = (t) => { t = Math.sqrt(t); const a = [10, 18, 40], m = [255, 77, 141], z = [255, 226, 120];
+    const ramp = (t) => { t = Math.sqrt(t); const a = [255, 255, 255], m = [140, 172, 204], z = [24, 52, 88];
       const [c0, c1, u] = t < 0.5 ? [a, m, t * 2] : [m, z, (t - 0.5) * 2]; return c0.map((x, i) => x + (c1[i] - x) * u); };
     for (let i = 0; i < 101 * 101; i++) { const c = ramp(d[i] / (d.max || 1)); img.data.set([c[0], c[1], c[2], 255], i * 4); }
     ctx.putImageData(img, 0, 0);
-    ctx.fillStyle = "#fff"; ctx.fillRect(Math.round(S1.b * 100) - 1, Math.round(S1.v * 100) - 1, 3, 3);
+    ctx.fillStyle = COL.win; ctx.fillRect(Math.round(S1.b * 100) - 1, Math.round(S1.v * 100) - 1, 3, 3);
   }
 
   function draw1() {
@@ -280,10 +285,10 @@
     }
     S2.cnt++; S2.last = C.evalFirstPrice(vals, n, kOf(S2.ki)); return true;
   }
-  function stop2() { if (S2.timer) { clearInterval(S2.timer); S2.timer = null; $("#play2").innerHTML = "&#9654; Play"; } }
+  function stop2() { if (S2.timer) { clearInterval(S2.timer); S2.timer = null; $("#play2").innerHTML = "Play"; } }
   function play2() {
     if (S2.timer) return stop2();
-    $("#play2").innerHTML = "&#10073;&#10073; Pause";
+    $("#play2").innerHTML = "Pause";
     S2.timer = setInterval(() => { const k = perTick(+$("#speed2").value); for (let i = 0; i < k; i++) if (!step2()) break; draw2(); }, 80);
   }
   function draw2() {
@@ -306,7 +311,7 @@
     const all = [2, 3, 4].map((m) => fpCurve(m).map((p) => p[1]));
     const [lo, hi] = yRange(all, true);
     const ch = Chart($("#curve2"), { xmin: 0, xmax: 2, ymin: lo, ymax: hi, xlabel: "k (you bid k · v)", ylabel: "expected utility" });
-    [2, 3, 4].forEach((m) => ch.line(fpCurve(m), m === n ? COL.exact : "#3a4a73", m === n ? 2.4 : 1.4, m === n ? "" : "4 3"));
+    [2, 3, 4].forEach((m) => ch.line(fpCurve(m), m === n ? COL.exact : COL.faint, m === n ? 2.4 : 1.4, m === n ? "" : "4 3"));
     ch.dots(mc, COL.you, 3).vline(ks, COL.rival, "k*", "4 4").vline(k, COL.you, "", "1 0").legend([["exact, current n", COL.exact], ["simulated", COL.you]]).done();
     // overpayment
     const gs = cnt ? Array.from({ length: KG }, (_, i) => [kOf(i), S2.gap[i] / cnt]) : [], f1 = cnt ? Array.from({ length: KG }, (_, i) => [kOf(i), S2.o1[i] / cnt]) : [];
@@ -347,7 +352,7 @@
     const costs = S3.costs, o = C.vcg(costs), on = o.chosen.path;
     $$("#costs3 > div").forEach((d) => d.classList.toggle("sel", d.dataset.e === S3.sel));
     // graph
-    const R = 24; let svg = '<defs><marker id="arr" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#8a97b8"/></marker></defs>';
+    const R = 24; let svg = '<defs><marker id="arr" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#4b5157"/></marker></defs>';
     EDGE_KEYS.forEach((e) => {
       const [x1, y1] = POS[e[0]], [x2, y2] = POS[e[1]], dx = x2 - x1, dy = y2 - y1, L = Math.hypot(dx, dy), ux = dx / L, uy = dy / L;
       const ax = x1 + ux * R, ay = y1 + uy * R, bx = x2 - ux * (R + 4), by = y2 - uy * (R + 4), t = e === "CF" ? 0.6 : 0.5;

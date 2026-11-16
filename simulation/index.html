@@ -3,12 +3,13 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Auction Lab</title>
-<link rel="stylesheet" href="style.css?v=2">
+<title>Auction Mechanisms</title>
+<link rel="stylesheet" href="style.css?v=5">
 </head>
 <body>
 <header>
-  <div class="brand"><span class="logo">&#9670;</span> Auction Lab</div>
+  <h1>Auction Mechanisms</h1>
+  <p>Interactive simulations of the second-price auction, the first-price auction and the VCG path mechanism.</p>
   <nav id="tabs">
     <button data-tab="t1" class="active">Second-price</button>
     <button data-tab="t2">First-price</button>
@@ -34,7 +35,7 @@
       <input type="range" id="b-slider" min="0" max="1" step="0.01" value="0.8">
       <button id="b-truth" class="ghost">bid truthfully (b = v)</button></div>
     <div class="row buttons">
-      <button id="play" class="primary">&#9654; Play</button><button id="step">Step</button>
+      <button id="play" class="primary">Play</button><button id="step">Step</button>
       <button id="run10k">+10,000</button><button id="run100k">+100,000</button><button id="reset" class="ghost">Reset</button>
       <label class="inline">speed <input type="range" id="speed" min="1" max="60" value="8"></label>
     </div>
@@ -60,7 +61,7 @@
 
   <section class="panel"><h3>Regret heatmap <small>how much utility you lose by bidding b when your value is v</small></h3>
     <div class="heat"><canvas id="heat1" width="101" height="101"></canvas>
-      <div class="legend">x: your bid 0 &rarr; 1<br>y: your value 0 &rarr; 1<br><span class="dot"></span> current (v, b)<br>dark = no regret, bright = large regret.<br>Zero regret along the diagonal b = v.</div></div></section>
+      <div class="legend">x: your bid 0 &rarr; 1<br>y: your value 0 &rarr; 1<br><span class="dot"></span> current (v, b)<br>white = no regret, dark blue = large regret.<br>Zero regret along the diagonal b = v.</div></div></section>
   <section class="panel controls"><h3>All 9 combinations <small>exact curves, Part A grid</small></h3>
     <button id="grid-toggle" class="ghost">Show / hide the 3 &times; 3 grid</button>
     <div id="grid9" class="grid9" hidden></div></section>
@@ -76,7 +77,7 @@
       <input type="range" id="k-slider" min="0.1" max="2" step="0.1" value="0.5">
       <button id="k-eq" class="ghost">nearest to equilibrium k*</button></div>
     <div class="row buttons">
-      <button id="play2" class="primary">&#9654; Play</button><button id="step2">Step</button>
+      <button id="play2" class="primary">Play</button><button id="step2">Step</button>
       <button id="run10k2">+10,000</button><button id="run100k2">+100,000</button><button id="reset2" class="ghost">Reset</button>
       <label class="inline">speed <input type="range" id="speed2" min="1" max="60" value="8"></label>
     </div>
@@ -113,6 +114,6 @@
 
 <footer>All simulations run in your browser. Seeded random numbers, so a given run is reproducible.</footer>
 <script src="core.js?v=2"></script>
-<script src="app.js?v=3"></script>
+<script src="app.js?v=6"></script>
 </body>
 </html>
