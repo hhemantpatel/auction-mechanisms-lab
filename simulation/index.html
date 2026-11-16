@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Auction Mechanisms</title>
-<link rel="stylesheet" href="style.css?v=5">
+<link rel="stylesheet" href="style.css?v=6">
 </head>
 <body>
 <header>
@@ -61,7 +61,7 @@
 
   <section class="panel"><h3>Regret heatmap <small>how much utility you lose by bidding b when your value is v</small></h3>
     <div class="heat"><canvas id="heat1" width="101" height="101"></canvas>
-      <div class="legend">x: your bid 0 &rarr; 1<br>y: your value 0 &rarr; 1<br><span class="dot"></span> current (v, b)<br>white = no regret, dark blue = large regret.<br>Zero regret along the diagonal b = v.</div></div></section>
+      <div class="legend">x: your bid 0 &rarr; 1<br>y: your value 0 &rarr; 1<br><span class="dot"></span> current (v, b)<br>black = no regret, light blue = large regret.<br>Zero regret along the diagonal b = v.</div></div></section>
   <section class="panel controls"><h3>All 9 combinations <small>exact curves, Part A grid</small></h3>
     <button id="grid-toggle" class="ghost">Show / hide the 3 &times; 3 grid</button>
     <div id="grid9" class="grid9" hidden></div></section>
@@ -114,6 +114,6 @@
 
 <footer>All simulations run in your browser. Seeded random numbers, so a given run is reproducible.</footer>
 <script src="core.js?v=2"></script>
-<script src="app.js?v=6"></script>
+<script src="app.js?v=7"></script>
 </body>
 </html>

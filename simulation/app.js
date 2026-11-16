@@ -5,7 +5,7 @@
   const $ = (s) => document.querySelector(s);
   const $$ = (s) => Array.from(document.querySelectorAll(s));
   const f2 = (x) => x.toFixed(2), f3 = (x) => x.toFixed(3), f4 = (x) => x.toFixed(4);
-  const COL = { you: "#1f77b4", rival: "#ff7f0e", win: "#d62728", exact: "#1a1a1a", warn: "#d62728", n3: "#2ca02c", faint: "#c4c4c4" };
+  const COL = { you: "#4ea1ff", rival: "#ffa040", win: "#ff5c5c", exact: "#e6e6e6", warn: "#ff5c5c", n3: "#4cc38a", faint: "#555555" };
   const MAX = 300000;
 
   // ---------------- tiny SVG chart helper ----------------
@@ -64,7 +64,7 @@
       },
       legend(items) {
         const x = W - R - 250;
-        s.push(`<rect x="${x - 8}" y="${T}" width="256" height="${items.length * 24 + 8}" fill="#fff" stroke="var(--line)"/>`);
+        s.push(`<rect x="${x - 8}" y="${T}" width="256" height="${items.length * 24 + 8}" fill="var(--panel)" stroke="var(--line)"/>`);
         items.forEach((it, i) => s.push(`<rect x="${x}" y="${T + 10 + i * 24}" width="12" height="12" fill="${it[1]}"/><text x="${x + 18}" y="${T + 21 + i * 24}">${it[0]}</text>`));
         return this;
       },
@@ -169,7 +169,7 @@
       d.max = mx; heatCache[key] = d;
     }
     const cv = $("#heat1"), ctx = cv.getContext("2d"), img = ctx.createImageData(101, 101);
-    const ramp = (t) => { t = Math.sqrt(t); const a = [255, 255, 255], m = [140, 172, 204], z = [24, 52, 88];
+    const ramp = (t) => { t = Math.sqrt(t); const a = [23, 23, 23], m = [40, 110, 190], z = [190, 225, 255];
       const [c0, c1, u] = t < 0.5 ? [a, m, t * 2] : [m, z, (t - 0.5) * 2]; return c0.map((x, i) => x + (c1[i] - x) * u); };
     for (let i = 0; i < 101 * 101; i++) { const c = ramp(d[i] / (d.max || 1)); img.data.set([c[0], c[1], c[2], 255], i * 4); }
     ctx.putImageData(img, 0, 0);
@@ -352,7 +352,7 @@
     const costs = S3.costs, o = C.vcg(costs), on = o.chosen.path;
     $$("#costs3 > div").forEach((d) => d.classList.toggle("sel", d.dataset.e === S3.sel));
     // graph
-    const R = 24; let svg = '<defs><marker id="arr" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#4b5157"/></marker></defs>';
+    const R = 24; let svg = '<defs><marker id="arr" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#8a8a8a"/></marker></defs>';
     EDGE_KEYS.forEach((e) => {
       const [x1, y1] = POS[e[0]], [x2, y2] = POS[e[1]], dx = x2 - x1, dy = y2 - y1, L = Math.hypot(dx, dy), ux = dx / L, uy = dy / L;
       const ax = x1 + ux * R, ay = y1 + uy * R, bx = x2 - ux * (R + 4), by = y2 - uy * (R + 4), t = e === "CF" ? 0.6 : 0.5;

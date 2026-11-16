@@ -1,9 +1,9 @@
 :root{
-  /* interface: neutral greys only */
-  --bg:#f4f4f4; --panel:#ffffff; --line:#dcdcdc; --grid:#eeeeee; --soft:#fafafa;
-  --text:#1a1a1a; --muted:#666666; --ui:#1a1a1a;
+  /* interface: neutral dark greys only */
+  --bg:#121212; --panel:#1c1c1c; --line:#333333; --grid:#2a2a2a; --soft:#171717; --hover:#2a2a2a;
+  --text:#e6e6e6; --muted:#9a9a9a; --ui:#e6e6e6; --ui-text:#121212;
   /* data colours: used only for bars, charts and the graph */
-  --you:#1f77b4; --rival:#ff7f0e; --win:#d62728; --warn:#d62728;
+  --you:#4ea1ff; --rival:#ffa040; --win:#ff5c5c; --warn:#ff5c5c;
 }
 *{box-sizing:border-box}
 body{margin:0;background:var(--bg);color:var(--text);font:15px/1.5 -apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif}
@@ -29,27 +29,27 @@ small{color:var(--muted);font-weight:400;font-size:13px;margin-left:6px;font-fam
 .row{display:flex;flex-wrap:wrap;gap:10px 14px;align-items:center;margin:9px 0}
 .row>label{min-width:130px;color:var(--muted)}
 .row b{color:var(--text)}
-button{font:inherit;font-size:14px;color:var(--text);background:#fff;border:1px solid var(--line);padding:5px 12px;border-radius:3px;cursor:pointer}
-button:hover{background:#efefef}
+button{font:inherit;font-size:14px;color:var(--text);background:var(--soft);border:1px solid var(--line);padding:5px 12px;border-radius:3px;cursor:pointer}
+button:hover{background:var(--hover)}
 .chips{display:inline-flex;flex-wrap:wrap;border:1px solid var(--line);border-radius:3px;overflow:hidden}
 .chips[hidden],.grid9[hidden]{display:none}
 .chips button{border:0;border-right:1px solid var(--line);border-radius:0}
 .chips button:last-child{border-right:0}
-.chips button.on{background:var(--ui);color:#fff}
-button.primary{background:var(--ui);border-color:var(--ui);color:#fff;min-width:74px}
-button.primary:hover{background:#000}
+.chips button.on{background:var(--ui);color:var(--ui-text);font-weight:600}
+button.primary{background:var(--ui);border-color:var(--ui);color:var(--ui-text);font-weight:600;min-width:74px}
+button.primary:hover{background:#ffffff}
 button.ghost{background:transparent}
-input[type=range]{accent-color:#444;min-width:160px}
+input[type=range]{accent-color:#bdbdbd;min-width:160px}
 label.inline{display:flex;gap:8px;align-items:center;color:var(--muted)}
 
 .badge{display:inline-block;padding:6px 10px;border-left:3px solid var(--line);font-size:13px;margin-top:6px;min-height:22px;background:var(--soft)}
-.badge.ok{border-color:#444;color:var(--text);background:#f2f2f2}
-.badge.bad{border-color:var(--warn);color:var(--text);background:#f2f2f2}
+.badge.ok{border-color:#bdbdbd;color:var(--text);background:var(--soft)}
+.badge.bad{border-color:var(--warn);color:var(--text);background:var(--soft)}
 
 .chart{width:100%;height:auto;display:block}
 .chart.small{max-height:90px}
 .chart text{fill:var(--muted);font-size:19px;font-family:inherit}
-.chart .axis{stroke:#8f959c;stroke-width:1}
+.chart .axis{stroke:#666666;stroke-width:1}
 .chart .grid{stroke:var(--grid);stroke-width:1}
 .grid9 svg text{font-size:17px}
 
@@ -57,7 +57,7 @@ label.inline{display:flex;gap:8px;align-items:center;color:var(--muted)}
 .bar-row{display:grid;grid-template-columns:110px 1fr 70px;gap:10px;align-items:center;margin:7px 0}
 .bar-row .name{color:var(--muted);font-size:14px}
 .bar-row .val{font-variant-numeric:tabular-nums;text-align:right}
-.track{height:18px;background:#f0f0f0;border:1px solid var(--line);border-radius:2px;overflow:hidden}
+.track{height:18px;background:var(--soft);border:1px solid var(--line);border-radius:2px;overflow:hidden}
 .fill{height:100%;width:0;background:var(--rival);transition:width .3s ease}
 .bar-row.you .fill{background:var(--you)}
 .bar-row.win .fill{background:var(--win)}
@@ -87,12 +87,12 @@ label.inline{display:flex;gap:8px;align-items:center;color:var(--muted)}
 .graph th:first-child,.graph td:first-child{text-align:left}
 .graph tr.onpath td{color:var(--win);font-weight:600}
 .graph tr.sel td:first-child{box-shadow:inset 3px 0 0 var(--ui)}
-.node circle{fill:#fff;stroke:var(--text);stroke-width:1.4}
+.node circle{fill:var(--panel);stroke:var(--text);stroke-width:1.4}
 .node text{fill:var(--text);font:italic 19px Georgia,"Times New Roman",serif;text-anchor:middle;dominant-baseline:central}
-.edge line{stroke:#6b7178;stroke-width:1.6}
+.edge line{stroke:#8a8a8a;stroke-width:1.6}
 .edge.on line{stroke:var(--win);stroke-width:3.2}
 .edge.sel line{stroke:var(--you);stroke-width:3.2}
-.edge text{fill:var(--text);font:14px Georgia,"Times New Roman",serif;text-anchor:middle;paint-order:stroke;stroke:#fff;stroke-width:4px}
+.edge text{fill:var(--text);font:14px Georgia,"Times New Roman",serif;text-anchor:middle;paint-order:stroke;stroke:var(--panel);stroke-width:4px}
 .edge{cursor:pointer}
 
 footer{color:var(--muted);text-align:center;padding:24px;font-size:13px}
